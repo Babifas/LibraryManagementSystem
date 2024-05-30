@@ -6,5 +6,6 @@ namespace LibraryManagementSystem.Repository.interfaces
     {
         Task<IEnumerable<Books>> GetAllBooks();
         Task<Books> GetBooksById(int bookId);
+        Task<bool> AddNewBook(Books book);
     }
 }

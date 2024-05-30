@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.Repository.interfaces;
+﻿using LibraryManagementSystem.Model;
+using LibraryManagementSystem.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,7 @@ namespace LibraryManagementSystem.Controllers
             try
             {
                 var book = await _bookRepository.GetBooksById(bookId);
-                if(book == null)
+                if (book == null)
                 {
                     return NotFound($"Book not found with id {bookId}");
                 }
@@ -43,5 +44,23 @@ namespace LibraryManagementSystem.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost("AddNewBook")]
+        public async Task<IActionResult> AddNewBook(Books book)
+        {
+            try
+            {
+                var res = await _bookRepository.AddNewBook(book);
+                if (res)
+                {
+                    return Ok("New book added successfully");
+                }
+                return BadRequest("Invalid input");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

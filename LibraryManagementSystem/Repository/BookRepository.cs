@@ -62,5 +62,25 @@ namespace LibraryManagementSystem.Repository
                 }
             }
         }
+        public async Task<bool> AddNewBook(Books book)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO BOOKS VALUES(@Title,@Author,@Publisher,@YearPublished,@CopiesAvailable,@TotalCopies)",connection);
+                cmd.Parameters.AddWithValue("@Title",book.Title);
+                cmd.Parameters.AddWithValue("@Author", book.Author);
+                cmd.Parameters.AddWithValue("@Publisher", book.Publisher);
+                cmd.Parameters.AddWithValue("@YearPublished", book.YearPublished);
+                cmd.Parameters.AddWithValue("@CopiesAvailable", book.CopiesAvailable);
+                cmd.Parameters.AddWithValue("@TotalCopies", book.TotalCopies);
+                var rowsEffected=await cmd.ExecuteNonQueryAsync();
+                if (rowsEffected > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }
