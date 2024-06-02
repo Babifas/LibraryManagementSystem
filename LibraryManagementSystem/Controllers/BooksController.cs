@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystem.Model;
+using LibraryManagementSystem.Model.DTOs;
 using LibraryManagementSystem.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,7 @@ namespace LibraryManagementSystem.Controllers
             }
         }
         [HttpPost("AddNewBook")]
-        public async Task<IActionResult> AddNewBook(Books book)
+        public async Task<IActionResult> AddNewBook(Book book)
         {
             try
             {
@@ -61,6 +62,52 @@ namespace LibraryManagementSystem.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpPut("UpdateBook")]
+        public async Task<IActionResult> UpdateBook(Book book)
+        {
+            try
+            {
+                var res = await _bookRepository.UpdateBook(book);
+                if (res)
+                {
+                    return Ok("Book details updated successfully");
+                }
+                return BadRequest("Invalid data");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteBook")]
+        public async Task<IActionResult> DeleteBook(int bookId)
+        {
+            try
+            {
+                var res = await _bookRepository.DeleteBook(bookId);
+                if (res)
+                {
+                    return Ok("Book deleted successfully");
+                }
+                return NotFound($"Book not found with {bookId}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("SearchBooks")]
+        public async Task<IActionResult> SearchBooks(BookDto book)
+        {
+            try
+            {
+                var books = await _bookRepository.SearchBooks(book);
+                return Ok(books);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

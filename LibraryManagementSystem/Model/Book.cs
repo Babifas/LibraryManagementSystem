@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem.Model
 {
-    public class Books
+    public class Book
     {
         public int BookId {  get; set; }
         public string Title { get; set; }
