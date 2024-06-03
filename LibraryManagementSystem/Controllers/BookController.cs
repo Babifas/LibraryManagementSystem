@@ -8,10 +8,10 @@ namespace LibraryManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
-        public BooksController(IBookRepository bookRepository)
+        public BookController(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
         }
@@ -97,7 +97,7 @@ namespace LibraryManagementSystem.Controllers
             }
         }
         [HttpGet("SearchBooks")]
-        public async Task<IActionResult> SearchBooks(BookDto book)
+        public async Task<IActionResult> SearchBooks([FromQuery]BookDto book)
         {
             try
             {

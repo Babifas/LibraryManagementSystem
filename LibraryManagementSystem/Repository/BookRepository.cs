@@ -118,25 +118,25 @@ namespace LibraryManagementSystem.Repository
                 List<SqlParameter> parameters = new List<SqlParameter>();
                 if (book.Title != null)
                 {
-                    query.Append("Title=@Title AND");
+                    query.Append("Title=@Title AND ");
                     parameters.Add(new SqlParameter("@Title", book.Title));
                 }
                 if (book.Author != null)
                 {
-                    query.Append("Author=@Author AND");
+                    query.Append("Author=@Author AND ");
                     parameters.Add(new SqlParameter("@Author", book.Author));
                 }
                 if (book.Publisher != null)
                 {
-                    query.Append("Publisher=@Publisher AND");
+                    query.Append("Publisher=@Publisher AND ");
                     parameters.Add(new SqlParameter("@Publisher", book.Publisher));
                 }
                 if (book.YearPublished != null)
                 {
-                    query.Append("YearPublished=@YearPublished AND");
+                    query.Append("YearPublished=@YearPublished AND ");
                     parameters.Add(new SqlParameter("@YearPublished", book.YearPublished));
                 }
-                query.Remove(query.Length - 1, 4);
+                query.Length-=5;
                 SqlCommand cmd= new SqlCommand(query.ToString(), connection);
                 cmd.Parameters.AddRange(parameters.ToArray());
                 SqlDataReader reader = cmd.ExecuteReader();
